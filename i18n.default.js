@@ -2,11 +2,8 @@ module.exports = {
 	source: 'google',
 	path: '',
 	strict: true,
-	'override.default.rules': false,
-	rules: {
-		'.js': ["$t('#'", "$tc('#'"],
-		'.mjml': ['{{ t "#" }}'],
-	},
+	rules: {},
+	outputDir: '',
 	check: [],
-	ignore: ['node_modules'],
+	ignore: ['node_modules', '.git'],
 }
