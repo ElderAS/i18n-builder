@@ -10,19 +10,6 @@ class JSGenerator {
 		}))
 	}
 	static Write(files = [], targetDir = path.join(__dirname, 'dist')) {
-		let indexFile = {
-			filename: 'index.js',
-			content: `const fs = require('fs')
-const path = require('path')
-
-let files = fs.readdirSync(path.resolve(__dirname))
-
-files = files.filter(f => f !== 'index.js')
-
-module.exports = files
-`,
-		}
-		files = files.concat(indexFile)
 		if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir)
 		files.forEach(f => {
 			fs.writeFileSync(path.join(targetDir, f.filename), f.content)
