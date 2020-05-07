@@ -74,20 +74,20 @@ npx i18n --setup --new
 ### Options
 
 **source**: `String` _(Default: `'google'`)_:
-The source of the lanugage keys. Only supported value right now is `google`.Support for local `*.csv` and `*.xlsx` will be added in a future release.
+The source of the lanugage keys. Only supported value right now is `google`. Support for local `*.csv` and `*.xlsx` will be added in a future release.
 
 **path**: `String` _(Default: `""`)_: ID of the Google Spreadsheet where the language-keys are stored. This has to be the ID of a spreadsheet created by this plugin, and owned by the user that created the token in `i18n.token.json`.
-
-**rules**: `Object` _(Default: `{}`)_: An object with key:value pairs of `[file-extension]: Syntax[]`, where `Syntax` is a syntax which has been used to fetch i18n-language-keys, but with the language-key replaced by a `#`. A language-key is not matched if it uses anything other than the letters in the english alphabet (`A-Z` and `a-z`), underscores(`_`), dashes(`-`) or periods(`.`).
 
 **strict**: `Boolean` _(Default: `true`)_:
 Controls whether or not to prevent building of language files if there are language-keys used in the project that are not defined in the Google Spreadsheet. This will always be `true` unless explicitly set to `false`. Simply removing the key from the configuration-file will not work.
 
-**outputDir**: `String` _(Default: `null`)_: The directory where the translation-files the plugin generates will be written to, relative to the project root. If not specified, the plugin will write to a `dist` folder in its local directory, making it available by using `require('i18n/dist')`.
+**outputDir**: `String` _(Default: `null`)_: The directory where the translation-files the plugin generates will be written to, relative to the project root. If not specified, the plugin will write to a `dist` folder in its local directory.
 
 **check**: `Array` _(Default: `[]`)_: An array of directories relative to the project root in which to search for language-keys.
 
 **ignore**: `Array` _(Default: `[]`)_: An array of directories relative to the project root the plugin will skip. `node_modules` and `.git` are always ignored.
+
+**rules**: `Object` _(Default: `{}`)_: An object with key:value pairs of `[file-extension]: Syntax[]`, where `Syntax` is a syntax which has been used to fetch i18n-language-keys, but with the language-key replaced by a `#`. A language-key is not matched if it uses anything other than the letters in the english alphabet (`A-Z` and `a-z`), numbers(`0-9`), underscores(`_`), dashes(`-`) or periods(`.`).
 
 Example:
 

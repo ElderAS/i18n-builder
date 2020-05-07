@@ -60,7 +60,8 @@ function getAccessToken(oAuth2Client) {
 		Logger.info('After logging in you will get a code, which you will have to')
 		Logger.info('paste into this terminal. You can cancel the process at any time')
 		Logger.info('by pressing ^C (ctrl/cmd + C) in this terminal.')
-		Logger.info('Press enter to open URL in browser')
+		Logger.info('URL:', authUrl)
+		Logger.info('Press enter to open the URL in your browser')
 		ReadLinePromise('Waiting for your input...')
 			.then(() => {
 				Logger.info('Opening URL in browser...')
