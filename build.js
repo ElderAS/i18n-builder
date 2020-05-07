@@ -78,9 +78,14 @@ async function GetConfig(CONFIG_PATH) {
 			if (cliOptions.setup || cliOptions.new) {
 				if (cliOptions.setup) {
 					Logger.info('Creating default config file...')
-					await CreateDefaultConfig()
+					userConfig = await CreateDefaultConfig()
 				}
 				if (cliOptions.new) {
+					if (!userConfig) {
+						Logger.error('No user config, use flag --setup to create a default one')
+						Logger.error('Cancelling...')
+						process.exit(0)
+					}
 					Logger.info('Creating new spreadsheet...')
 					await CreateSpreadsheet('i18n Language Spreadsheet (title can be edited freely)').then(sheet => {
 						Logger.info('New spreadsheet created with ID ' + sheet.spreadsheetId)
