@@ -23,8 +23,8 @@ npx i18n
 Or as an npm script:
 
 ```json
+// package.json
 {
-	// package.json
 	"scripts": {
 		"i18n-cli": "i18n"
 	}
