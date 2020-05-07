@@ -1,25 +1,33 @@
 {
-	"name": "i18n-builder",
-	"version": "0.1.0",
-	"description": "Plugin that can recieve a google spreadsheet, and build language files ready for use",
-	"main": "build.js",
-	"bin": {
-		"i18n": "build.js"
-	},
-	"scripts": {},
-	"author": "ruben@elder.no",
-	"license": "MIT",
-	"dependencies": {
-		"googleapis": "^49.0.0",
-		"lodash": "^4.17.15",
-		"opn": "^6.0.0"
-	},
-	"devDependencies": {
-		"cz-conventional-changelog": "^3.2.0"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	}
+  "name": "i18n-builder",
+  "version": "0.0.0-development",
+  "description": "Plugin that can recieve a google spreadsheet, and build language files ready for use",
+  "main": "build.js",
+  "bin": {
+    "i18n": "build.js"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "author": "ruben@elder.no",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^49.0.0",
+    "lodash": "^4.17.15",
+    "opn": "^6.0.0"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.2.0",
+    "semantic-release-cli": "^5.2.3",
+    "semantic-release": "^17.0.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElderAS/i18n-builder.git"
+  }
 }
