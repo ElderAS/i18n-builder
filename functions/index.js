@@ -39,14 +39,17 @@ module.exports = {
 			return string
 		}
 		return Object.entries(rules).reduce((result, [extension, tests]) => {
-			result[extension] = tests.map(test => {
-				let [before, after] = test.split('#').map(escapeForRegex)
-				if (!before || !after) {
-					throw 'An i18n syntax can neither start or end with #'
-				}
-				let teststring = `(?<=${before})[\\w\\d.]+(?=${after})`
-				return new RegExp(teststring, 'gmi')
-			})
+			result[extension] = tests
+				.map(test => {
+					let [before, after] = test.split('#').map(escapeForRegex)
+					if (!before || !after) {
+						Logger.warning("An i18n syntax can neither start nor end with '#'")
+						return
+					}
+					let teststring = `(?<=${before})[\\w\\d._-]+(?=${after})`
+					return new RegExp(teststring, 'gmi')
+				})
+				.filter(Boolean)
 			return result
 		}, {})
 	},
