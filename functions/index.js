@@ -44,6 +44,7 @@ module.exports = {
 					let [before, after] = test.split('#').map(escapeForRegex)
 					if (!before || !after) {
 						Logger.warning("An i18n syntax can neither start nor end with '#'")
+						Logger.warning('This syntax is invalid:', test)
 						return
 					}
 					let teststring = `(?<=${before})[\\w\\d._-]+(?=${after})`

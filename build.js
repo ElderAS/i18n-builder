@@ -23,11 +23,11 @@ function GetAllKeysInDir(dir, rules, ignore = []) {
 	ignore = ignore.concat(['node_modules', '.git'])
 	dir = path.resolve(dir)
 	if (!fs.existsSync(dir)) {
-		Logger.warn('Directory', dir, 'does not exist, skipping...')
+		Logger.warning('Directory', dir, 'does not exist, skipping...')
 		return []
 	}
 	if (!isDirectory(dir)) {
-		Logger.warn('Directory', dir, 'is not a directory, skipping...')
+		Logger.warning('Directory', dir, 'is not a directory, skipping...')
 		return []
 	}
 
