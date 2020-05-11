@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { uniq, difference } = require('lodash')
+const difference = require('ramda').difference
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
@@ -35,7 +35,7 @@ function GetAllKeysInDir(dir, rules, ignore = []) {
 		.readdirSync(dir)
 		.filter(f => !ignore.includes(f))
 		.map(f => path.join(dir, f))
-	return uniq(GetFileKeys(files, rules)) || []
+	return Array.from(new Set(GetFileKeys(files, rules)))
 }
 
 function GetFileKeys(files = [], rules) {
@@ -120,7 +120,7 @@ function SearchFiles({ check, rules, ignore }) {
 	fileKeys = check.reduce((result, dir) => {
 		Logger.info('Searching in directory:', dir)
 		result = result.concat(GetAllKeysInDir(dir, rules, ignore))
-		return uniq(result)
+		return Array.from(new Set(result))
 	}, [])
 	return fileKeys
 }
