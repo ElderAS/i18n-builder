@@ -1,5 +1,6 @@
 const GoogleSheetsAPI = require('../auth/GoogleAPI')
 const Logger = require('../classes/BadgeLogger')
+const assocPath = require('ramda').assocPath
 
 module.exports = {
 	CreateSpreadsheet: title => {
@@ -21,15 +22,58 @@ module.exports = {
 	},
 	ReduceToObjects: (data = []) => {
 		let [keys = [], ...languages] = data
-		let final = languages.reduce((fin, lang) => {
-			let [key, ...translations] = lang
-			fin[key] = translations.reduce((acc, curr, index, original) => {
-				acc[keys[index + 1]] = curr
-				return acc
-			}, {})
-			return fin
-		}, {})
-		return { keys: keys.slice(1), languages: final }
+		keys = keys.slice(1)
+
+		return {
+			keys,
+			languages: languages.reduce((res, col) => {
+				let [locale, ...translations] = col
+				let processed = ''
+
+				function isSafe(path) {
+					if (!processed) return true
+					let pattern =
+						path.split('.').reduce((res, cur, index) => {
+							if (!index) return (res += cur)
+							return (res += '(.' + cur + ')?')
+						}, '^') + '$'
+
+					return !new RegExp(pattern, 'gm').test(processed)
+				}
+
+				res[locale] = translations.reduce((langObj, value, i) => {
+					let key = keys[i]
+
+					if (!isSafe(key)) {
+						Logger.warning('Conflict at:', key, '-> Skipping')
+						return langObj
+					}
+					processed += key + '\n'
+
+					return assocPath(keys[i].split('.'), value, langObj)
+				}, {})
+
+				return res
+			}, {}),
+		}
+
+		function SetKey(key, value, target) {
+			let parts = key.split('.')
+			let processed = []
+
+			parts.forEach((part, index) => {
+				let newTarget = index > 0 ? target[part] : target
+				SetKey()
+				processed.push(part)
+				let isLast = parts.length - 1 === index
+
+				return SetKey(part, value, target)
+			})
+
+			if (key in target)
+				return Logger.warning(`Conflicting key: "${key}" has already been defined. Skipping to avoid overwrite...`)
+			target[key] = value
+		}
 	},
 	RegexCreator: rules => {
 		if (!rules) return
