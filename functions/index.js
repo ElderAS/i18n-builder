@@ -12,7 +12,7 @@ module.exports = {
 	},
 
 	ReadSpreadsheet: spreadsheetId => {
-		return GoogleSheetsAPI.read(spreadsheetId, { range: 'A1:Z500', majorDimension: 'COLUMNS' })
+		return GoogleSheetsAPI.read(spreadsheetId, { range: 'A:Z', majorDimension: 'COLUMNS' })
 			.then(data => data || [])
 			.catch(err => {
 				Logger.error('Something went wrong while reading the spreadsheet.')
