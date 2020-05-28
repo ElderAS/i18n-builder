@@ -3,11 +3,15 @@ const assocPath = require('ramda').assocPath
 
 const isSafe = (path, current) => {
 	if (!current) return true
-	let pattern =
-		path.split('.').reduce((res, cur, index) => {
-			if (!index) return (res += cur)
-			return (res += '(.' + cur + ')?')
-		}, '^') + '$'
+	let end = ''
+	let pattern = path.split('.').reduce((res, cur, index) => {
+		if (!index) return (res += cur)
+		res += '(.' + cur + ''
+		end += ')?'
+		return res
+	}, '^')
+
+	pattern += end + '$'
 
 	return !new RegExp(pattern, 'gm').test(current)
 }
