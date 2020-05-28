@@ -1,9 +1,21 @@
-const GoogleSheetsAPI = require('../auth/GoogleAPI')
 const Logger = require('../classes/BadgeLogger')
 const assocPath = require('ramda').assocPath
 
+const isSafe = (path, current) => {
+	if (!current) return true
+	let pattern =
+		path.split('.').reduce((res, cur, index) => {
+			if (!index) return (res += cur)
+			return (res += '(.' + cur + ')?')
+		}, '^') + '$'
+
+	return !new RegExp(pattern, 'gm').test(current)
+}
+
 module.exports = {
+	isSafe,
 	CreateSpreadsheet: title => {
+		const GoogleSheetsAPI = require('../auth/GoogleAPI')
 		return GoogleSheetsAPI.create({
 			title,
 		}).then(response => {
@@ -13,6 +25,7 @@ module.exports = {
 	},
 
 	ReadSpreadsheet: spreadsheetId => {
+		const GoogleSheetsAPI = require('../auth/GoogleAPI')
 		return GoogleSheetsAPI.read(spreadsheetId, { range: 'A:Z', majorDimension: 'COLUMNS' })
 			.then(data => data || [])
 			.catch(err => {
@@ -30,21 +43,10 @@ module.exports = {
 				let [locale, ...translations] = col
 				let processed = ''
 
-				function isSafe(path) {
-					if (!processed) return true
-					let pattern =
-						path.split('.').reduce((res, cur, index) => {
-							if (!index) return (res += cur)
-							return (res += '(.' + cur + ')?')
-						}, '^') + '$'
-
-					return !new RegExp(pattern, 'gm').test(processed)
-				}
-
 				res[locale] = translations.reduce((langObj, value, i) => {
 					let key = keys[i]
 
-					if (!isSafe(key)) {
+					if (!isSafe(key, processed)) {
 						Logger.warning('Conflict at:', key, '-> Skipping')
 						return langObj
 					}
@@ -55,24 +57,6 @@ module.exports = {
 
 				return res
 			}, {}),
-		}
-
-		function SetKey(key, value, target) {
-			let parts = key.split('.')
-			let processed = []
-
-			parts.forEach((part, index) => {
-				let newTarget = index > 0 ? target[part] : target
-				SetKey()
-				processed.push(part)
-				let isLast = parts.length - 1 === index
-
-				return SetKey(part, value, target)
-			})
-
-			if (key in target)
-				return Logger.warning(`Conflicting key: "${key}" has already been defined. Skipping to avoid overwrite...`)
-			target[key] = value
 		}
 	},
 	RegexCreator: rules => {
