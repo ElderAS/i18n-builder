@@ -4,22 +4,27 @@
 	"description": "Plugin that can recieve a google spreadsheet, and build language files ready for use",
 	"main": "build.js",
 	"bin": {
-		"i18n": "build.js"
+		"i18n": "build.js",
+		"i18n-import": "import.js",
+		"i18n-export": "export.js"
 	},
 	"scripts": {
-		"semantic-release": "semantic-release"
+		"test": "echo \"No tests yet\"",
+		"semantic-release": "dotenv semantic-release"
 	},
 	"author": "ruben@elder.no",
 	"license": "MIT",
 	"dependencies": {
-		"googleapis": "^49.0.0",
+		"exceljs": "^4.3.0",
+		"googleapis": "^109.0.1",
 		"opn": "^6.0.0",
 		"ramda": "^0.27.0"
 	},
 	"devDependencies": {
-		"cz-conventional-changelog": "^3.2.0",
-		"semantic-release-cli": "^5.2.3",
-		"semantic-release": "^17.0.7"
+		"cz-conventional-changelog": "^3.3.0",
+		"dotenv-cli": "^4.0.0",
+		"semantic-release": "^17.3.0",
+		"semantic-release-cli": "^5.4.0"
 	},
 	"config": {
 		"commitizen": {

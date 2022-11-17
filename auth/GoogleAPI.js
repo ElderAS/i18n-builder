@@ -39,7 +39,8 @@ function getCodeFromUser() {
 				Logger.warning('No code provided, if you wish to cancel, press Ctrl/Cmd+C')
 				getCodeFromUser().then(resolve)
 			} else {
-				resolve(ans)
+				let url = new URL(ans)
+				resolve(url.searchParams.get('code'))
 			}
 		})
 	})
