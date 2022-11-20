@@ -23,14 +23,14 @@ async function handleGoogleSheet(sheets, options) {
 		return rows
 			.map(({ values }) => values)
 			.filter(row => {
-				const { userEnteredValue, effectiveFormat } = row[targetIndex]
+				const { userEnteredValue, effectiveFormat } = row[targetIndex] || {}
 				return !userEnteredValue || !Object.values(effectiveFormat.backgroundColor).every(e => e === 1)
 			})
 			.map(row => {
 				return {
 					key: row[spotIndex].formattedValue,
-					source: row[sourceIndex].userEnteredValue?.stringValue || '',
-					target: row[targetIndex].userEnteredValue?.stringValue || '',
+					source: row[sourceIndex]?.userEnteredValue?.stringValue || '',
+					target: row[targetIndex]?.userEnteredValue?.stringValue || '',
 				}
 			})
 	} catch (error) {
