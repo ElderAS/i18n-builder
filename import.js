@@ -90,6 +90,8 @@ const handleTranslationFile = async (file, locale, options) => {
 			const cleaned = row.values.filter(Boolean)
 			const [empty, key, ...translations] = row.values
 
+			if (!key) return
+
 			if (!row.hidden) {
 				if (rowNumber === 1) {
 					const visibleColumns = row.values.filter((_, index) => !sheet.getColumn(index)?.hidden)
